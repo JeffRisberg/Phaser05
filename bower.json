@@ -1,0 +1,7 @@
+{
+    "name": "Phaser05",
+    "version": "0.0.0",
+    "dependencies": {
+        "phaser": "2.2.1"
+    }
+}
