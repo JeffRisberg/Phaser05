@@ -10,23 +10,20 @@ function Play() {
 
 Play.prototype = {
     create: function () {
+        var backgroundName = 'background1';
+
         this.game.AUTOSCROLL_SPEED = -200;
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
-        this.background = this.game.add.tileSprite(0, 0, this.game.stage.width, this.game.cache.getImage('background').height, 'background');
+        this.background = this.game.add.tileSprite(0, 0, this.game.stage.width, this.game.cache.getImage(backgroundName).height, backgroundName);
         this.background.autoScroll(this.game.AUTOSCROLL_SPEED, 0);
         this.ground = new Ground(this.game, 0, this.game.stage.height - 100, this.game.stage.width, 100);
         this.game.add.existing(this.ground);
-        //TODO: this seems like affect the FPS, pay attention
-//    this.rain = new Rain(this.game);
-//    this.game.add.existing(this.rain);
+
         //game objects
         this.player = Player.init(this.game, 'bird');
         this.bulletGroup = new BulletGroup(this.game);
         this.monsterManager = new MonsterManager(this.game);
         this.monsterManager.autoSpawn();
-//    MonsterManager.create();
-//    this.monsterGroup = new MonsterGroup(this.game);
-//    this.game.time.events.loop(3000, this.monsterManager.addOneMonster);
 
         //keys
         this.key2 = this.input.keyboard.addKey(Phaser.Keyboard.TWO);
@@ -38,6 +35,7 @@ Play.prototype = {
     heroSwitch: function () {
         var pos = this.player.position;
         var state = this.player.state;
+
         this.player.destroy();
         if (state == 'human') {
             this.player = Player.init(this.game, 'bird', pos.x, pos.y);
