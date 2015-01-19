@@ -20,9 +20,11 @@ InputManager.prototype.leftInputIsActive = function () {
     return isActive;
 };
 
-// This function should return true when the player activates the "go right" control
-// In this case, either holding the right arrow or tapping or clicking on the right
-// side of the screen.
+/**
+ * This function should return true when the player activates the "go right" control
+ * In this case, either holding the right arrow or tapping or clicking on the right
+ * side of the screen.
+ */
 InputManager.prototype.rightInputIsActive = function () {
     var isActive = false;
 
@@ -33,49 +35,50 @@ InputManager.prototype.rightInputIsActive = function () {
     return isActive;
 };
 
-// This function should return true when the player activates the "go right" control
-// In this case, either holding the right arrow or tapping or clicking on the right
-// side of the screen.
+/**
+ * This function should return true when the player activates the "go right" control
+ * In this case, either holding the right arrow or tapping or clicking on the right
+ * side of the screen.
+ */
 InputManager.prototype.downInputIsActive = function () {
     var isActive = false;
 
     isActive = this.game.input.keyboard.isDown(Phaser.Keyboard.DOWN);
-//  isActive |= (this.game.input.activePointer.isDown &&
-//    this.game.input.activePointer.x > this.game.width/2 + this.game.width/4);
 
     return isActive;
 };
 
-
-// This function should return true when the player activates the "go right" control
-// In this case, either holding the right arrow or tapping or clicking on the right
-// side of the screen.
-// http://gamemechanicexplorer.com/#platformer-4
-
+/**
+ * This function should return true when the player activates the "go right" control
+ * In this case, either holding the right arrow or tapping or clicking on the right
+ * side of the screen.
+ *
+ * http://gamemechanicexplorer.com/#platformer-4
+ */
 InputManager.prototype.upInputIsActive = function (duration) {
     var isActive = false;
+
     isActive = this.game.input.keyboard.isDown(Phaser.Keyboard.UP);
-//  isActive = this.input.keyboard.justPressed(Phaser.Keyboard.UP,duration);
+
     isActive |= (this.game.input.activePointer.justPressed(duration + 1000 / 60) &&
         this.game.input.activePointer.x > this.game.width / 4 &&
         this.game.input.activePointer.x < this.game.width / 2 + this.game.width / 4);
+
     return isActive;
 };
 
-InputManager.prototype.shotInputIsActive = function (duration) {
+InputManager.prototype.shootInputIsActive = function (duration) {
     var isActive = false;
     var keyReset = false;
 
-    if (this.game.input.keyboard.downDuration(Phaser.Keyboard.ONE)) {
+    if (this.game.input.keyboard.downDuration(Phaser.Keyboard.SPACEBAR)) {
         keyReset = true;
         isActive = true;
-        console.log("just pressed 1");
     }
 
-    if (this.game.input.keyboard.upDuration(Phaser.Keyboard.ONE)) {
+    if (this.game.input.keyboard.upDuration(Phaser.Keyboard.SPACEBAR)) {
         keyReset = false;
         isActive = false;
-        console.log("just released 1");
     }
     return isActive;
 };

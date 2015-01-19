@@ -30,10 +30,6 @@ Play.prototype = {
         this.monsterManager = new MonsterManager(this.game);
         this.monsterManager.autoSpawn();
 
-        //keys
-        this.key2 = this.input.keyboard.addKey(Phaser.Keyboard.TWO);
-        this.key2.onDown.add(this.heroSwitch, this);
-
         this.inputManager = new InputManager(this.game);
 
         this.scoreText = this.game.add.text(20, 20, "Score: " + this.score,
@@ -42,20 +38,16 @@ Play.prototype = {
             { font: "35px Arial", fill: "#000" });
     },
 
-    heroSwitch: function () {
-        var pos = this.player.position;
-        var state = this.player.state;
-
-        this.player.destroy();
-        if (state == 'human') {
-            this.player = Player.init(this.game, 'bird', pos.x, pos.y);
-        } else {
-            //if the bird flys really slow, it gonna place player below the ground if we don't do minus 100 on y;
-            this.player = Player.init(this.game, 'human', pos.x, pos.y - 100);
-        }
-    },
-
     update: function () {
+        this.game.physics.arcade.overlap(this.bulletGroup, this.monsterManager.groups["bat"], this.bulletHitBaddie, null, this);
+        this.game.physics.arcade.overlap(this.bulletGroup, this.monsterManager.groups["spider"], this.bulletHitBaddie, null, this);
+        this.game.physics.arcade.overlap(this.bulletGroup, this.monsterManager.groups["skeleton"], this.bulletHitBaddie, null, this);
+
+        this.game.physics.arcade.overlap(this.player, this.monsterManager.groups["bat"], this.playerHitBaddie, null, this);
+        this.game.physics.arcade.overlap(this.player, this.monsterManager.groups["spider"], this.playerHitBaddie, null, this);
+        this.game.physics.arcade.overlap(this.player, this.monsterManager.groups["skeleton"], this.playerHitBaddie, null, this);
+        this.game.physics.arcade.overlap(this.player, this.monsterManager.groups["stone"], this.playerHitBaddie, null, this);
+
         this.game.physics.arcade.collide(this.player, this.ground);
 
         if (this.inputManager.leftInputIsActive()) {
@@ -75,9 +67,25 @@ Play.prototype = {
             this.player.down();
         }
 
-        if (this.inputManager.shotInputIsActive()) {
-            console.log('shot pressed');
-            this.bulletGroup.shot(this.player.x, this.player.y);
+        if (this.inputManager.shootInputIsActive()) {
+            this.bulletGroup.shoot(this.player.x + this.player.width, this.player.y + this.player.height / 2);
+        }
+    },
+
+    bulletHitBaddie: function (player, baddie) {
+        baddie.kill();
+        this.score++;
+        this.scoreText.text = 'Score: ' + this.score;
+    },
+
+    playerHitBaddie: function (player, baddie) {
+        baddie.kill();
+        this.energy--;
+        this.energyText.text = 'Energy: ' + this.energy;
+
+        if (this.energy < 1) {
+            // Set the alive property of the player to false
+            player.alive = false
         }
     },
 
