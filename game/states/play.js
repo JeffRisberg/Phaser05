@@ -1,7 +1,6 @@
 'use strict';
 var Ground = require('../prefabs/ground');
 var Player = require('../prefabs/player');
-var Rain = require('../prefabs/particles/rain')
 var BulletGroup = require('../managers/bulletGroup');
 var InputManager = require('../managers/inputManager');
 var MonsterManager = require('../managers/monsterManager');
@@ -11,31 +10,35 @@ function Play() {
     this.scoreText;
     this.energy = 25;
     this.energyText;
+    this.fx;
 }
 
 Play.prototype = {
     create: function () {
-        var backgroundName = 'background1';
 
         this.game.AUTOSCROLL_SPEED = -200;
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
-        this.background = this.game.add.tileSprite(0, 0, this.game.stage.width, this.game.cache.getImage(backgroundName).height, backgroundName);
+        this.background = this.game.add.tileSprite(0, 0, this.game.stage.width, this.game.cache.getImage('background').height, 'background');
         this.background.autoScroll(this.game.AUTOSCROLL_SPEED, 0);
         this.ground = new Ground(this.game, 0, this.game.stage.height - 100, this.game.stage.width, 100);
         this.game.add.existing(this.ground);
 
-        //game objects
         this.player = Player.init(this.game, 'bird');
         this.bulletGroup = new BulletGroup(this.game);
         this.monsterManager = new MonsterManager(this.game);
         this.monsterManager.autoSpawn();
 
-        this.inputManager = new InputManager(this.game);
-
         this.scoreText = this.game.add.text(20, 20, "Score: " + this.score,
             { font: "35px Arial", fill: "#000" });
-        this.energyText = this.game.add.text(this.game.world.width - 320, 20, "Energy: " + this.energy,
+        this.energyText = this.game.add.text(this.game.world.width - 205, 20, "Energy: " + this.energy,
             { font: "35px Arial", fill: "#000" });
+
+        this.inputManager = new InputManager(this.game);
+
+        this.fx = this.game.add.audio('sfx');
+        this.fx.addMarker('ping', 10, 1.0);
+        this.fx.addMarker('death', 12, 1.0);
+        this.fx.addMarker('shot', 17, 1.0);
     },
 
     update: function () {
@@ -69,13 +72,16 @@ Play.prototype = {
 
         if (this.inputManager.shootInputIsActive()) {
             this.bulletGroup.shoot(this.player.x + this.player.width, this.player.y + this.player.height / 2);
+            this.fx.play("shot");
         }
     },
 
-    bulletHitBaddie: function (player, baddie) {
+    bulletHitBaddie: function (bullet, baddie) {
+        bullet.kill();
         baddie.kill();
         this.score++;
         this.scoreText.text = 'Score: ' + this.score;
+        this.fx.play("ping");
     },
 
     playerHitBaddie: function (player, baddie) {
@@ -84,13 +90,9 @@ Play.prototype = {
         this.energyText.text = 'Energy: ' + this.energy;
 
         if (this.energy < 1) {
-            // Set the alive property of the player to false
             player.alive = false
         }
-    },
-
-    clickListener: function () {
-        this.game.state.start('gameover');
+        this.fx.play("death");
     }
 };
 

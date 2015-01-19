@@ -1,4 +1,5 @@
 'use strict';
+
 var Bat = require('../prefabs/monsters/bat'),
     Skeleton = require('../prefabs/monsters/skeleton'),
     Spider = require('../prefabs/monsters/spider'),
@@ -41,15 +42,14 @@ MonsterManager.prototype.initOneGroup = function (key, initY) {
 };
 
 MonsterManager.prototype.addOneMonster = function (key, resetX, resetY) {
-    console.log(key);
-
     var monster = this.groups[key].getFirstDead();
+
     if (!monster) {
         var Monster = MONSTER_MAP[key];
         monster = new Monster(this.game, this.resetX, resetY);
         this.groups[key].add(monster);
     }
-    console.log(monster);
+
     monster.revive();
     monster.reset(resetX, resetY);
     monster.checkWorldBounds = true;
