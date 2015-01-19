@@ -5,7 +5,12 @@ var Rain = require('../prefabs/particles/rain')
 var BulletGroup = require('../managers/bulletGroup');
 var InputManager = require('../managers/inputManager');
 var MonsterManager = require('../managers/monsterManager');
+
 function Play() {
+    this.score = 0;
+    this.scoreText;
+    this.energy = 25;
+    this.energyText;
 }
 
 Play.prototype = {
@@ -30,6 +35,11 @@ Play.prototype = {
         this.key2.onDown.add(this.heroSwitch, this);
 
         this.inputManager = new InputManager(this.game);
+
+        this.scoreText = this.game.add.text(20, 20, "Score: " + this.score,
+            { font: "35px Arial", fill: "#000" });
+        this.energyText = this.game.add.text(this.game.world.width - 320, 20, "Energy: " + this.energy,
+            { font: "35px Arial", fill: "#000" });
     },
 
     heroSwitch: function () {
@@ -75,6 +85,5 @@ Play.prototype = {
         this.game.state.start('gameover');
     }
 };
-
 
 module.exports = Play;

@@ -1,7 +1,7 @@
 'use strict';
 
 var Ground = function (game, x, y, width, height) {
-  Phaser.TileSprite.call(this, game, x, y, width, height, 'ground2');
+  Phaser.TileSprite.call(this, game, x, y, width, height, 'ground');
   this.autoScroll(this.game.AUTOSCROLL_SPEED, 0);
   this.game.physics.arcade.enableBody(this);
   // we don't want the ground's body
