@@ -36,8 +36,8 @@ Play.prototype = {
         this.inputManager = new InputManager(this.game);
 
         this.fx = this.game.add.audio('sfx');
-        this.fx.addMarker('ping', 10, 1.0);
-        this.fx.addMarker('death', 12, 1.0);
+        this.fx.addMarker('alien death', 1, 1.0);
+        this.fx.addMarker('numkey', 9, 0.1);
         this.fx.addMarker('shot', 17, 1.0);
     },
 
@@ -81,7 +81,7 @@ Play.prototype = {
         baddie.kill();
         this.score++;
         this.scoreText.text = 'Score: ' + this.score;
-        this.fx.play("ping");
+        this.fx.play("numkey");
     },
 
     playerHitBaddie: function (player, baddie) {
@@ -92,7 +92,7 @@ Play.prototype = {
         if (this.energy < 1) {
             player.alive = false
         }
-        this.fx.play("death");
+        this.fx.play("alien death");
     }
 };
 
