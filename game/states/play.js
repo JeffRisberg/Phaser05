@@ -6,15 +6,18 @@ var InputManager = require('../managers/inputManager');
 var MonsterManager = require('../managers/monsterManager');
 
 function Play() {
-    this.score = 0;
+    this.score;
     this.scoreText;
-    this.energy = 25;
+    this.energy;
     this.energyText;
     this.fx;
 }
 
 Play.prototype = {
     create: function () {
+
+        this.score = 0;
+        this.energy = 25;
 
         this.game.AUTOSCROLL_SPEED = -200;
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -38,6 +41,7 @@ Play.prototype = {
         this.fx = this.game.add.audio('sfx');
         this.fx.addMarker('alien death', 1, 1.0);
         this.fx.addMarker('numkey', 9, 0.1);
+        this.fx.addMarker('ping', 10, 1.0);
         this.fx.addMarker('shot', 17, 1.0);
     },
 
@@ -45,6 +49,7 @@ Play.prototype = {
         this.game.physics.arcade.overlap(this.bulletGroup, this.monsterManager.groups["bat"], this.bulletHitBaddie, null, this);
         this.game.physics.arcade.overlap(this.bulletGroup, this.monsterManager.groups["spider"], this.bulletHitBaddie, null, this);
         this.game.physics.arcade.overlap(this.bulletGroup, this.monsterManager.groups["skeleton"], this.bulletHitBaddie, null, this);
+        this.game.physics.arcade.overlap(this.bulletGroup, this.monsterManager.groups["stone"], this.bulletHitStone, null, this);
 
         this.game.physics.arcade.overlap(this.player, this.monsterManager.groups["bat"], this.playerHitBaddie, null, this);
         this.game.physics.arcade.overlap(this.player, this.monsterManager.groups["spider"], this.playerHitBaddie, null, this);
@@ -84,13 +89,19 @@ Play.prototype = {
         this.fx.play("numkey");
     },
 
+    bulletHitStone: function (bullet, stone) {
+        bullet.kill();
+        this.fx.play("ping");
+    },
+
     playerHitBaddie: function (player, baddie) {
         baddie.kill();
         this.energy--;
         this.energyText.text = 'Energy: ' + this.energy;
 
         if (this.energy < 1) {
-            player.alive = false
+            player.alive = false;
+            this.game.state.start('gameover');
         }
         this.fx.play("alien death");
     }

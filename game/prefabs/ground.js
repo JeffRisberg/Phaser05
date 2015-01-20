@@ -1,11 +1,12 @@
 'use strict';
 
-var Ground = function (game, x, y, width, height) {
+var Ground = function (game, x, y, width, height) { // Extends Phaser.TileSprite
     Phaser.TileSprite.call(this, game, x, y, width, height, 'ground');
     this.autoScroll(this.game.AUTOSCROLL_SPEED, 0);
+
     this.game.physics.arcade.enableBody(this);
-    // we don't want the ground's body
-    // to be affected by gravity
+
+    // we don't want the ground's body to be affected by gravity
     this.body.allowGravity = false;
     this.body.immovable = true;
 };

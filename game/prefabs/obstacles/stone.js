@@ -1,8 +1,8 @@
 'use strict';
 
-var Stone = function (game, x, y) {
+var Stone = function (game, x, y) { // Extends Phaser.Sprite
     Phaser.Sprite.call(this, game, x, y, 'stone');
-    // initialize your prefab here
+
     this.anchor.setTo(0.5, 0.5);
     this.scale.setTo(0.4, 0.4);
     this.game.physics.arcade.enableBody(this);

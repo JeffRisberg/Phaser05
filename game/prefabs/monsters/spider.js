@@ -1,8 +1,8 @@
 'use strict';
 
-var Spider = function (game, x, y, frame) {
+var Spider = function (game, x, y, frame) { // Extends Phaser.Sprite
     Phaser.Sprite.call(this, game, x, y, 'spider', frame);
-    // initialize your prefab here
+
     this.scale.setTo(2, 2);
     this.anchor.setTo(0.5, 0.5);
     this.alive = true;
@@ -14,7 +14,6 @@ var Spider = function (game, x, y, frame) {
     this.DEFAULT_SPEED_X = this.game.AUTOSCROLL_SPEED;
 
     this.game.add.tween(this.scale).to({ x: 4, y: 4}, 2000, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
-    //this.tint = 0x000000;
 };
 
 Spider.prototype = Object.create(Phaser.Sprite.prototype);

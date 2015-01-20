@@ -1,11 +1,8 @@
-/**
- * This is an extension of a PhaserJS group
- */
 'use strict';
 
 var Bullet = require('../prefabs/bullet');
 
-function BulletGroup(game, parent) {
+function BulletGroup(game, parent) { // Extends Phaser.Group
     Phaser.Group.call(this, game, parent);
 
     this.SHOT_DELAY = 100; // milliseconds (10 bullets/second)
