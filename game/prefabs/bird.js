@@ -22,6 +22,8 @@ var Bird = function (game, x, y, frame) { // Extends Phaser.Sprite
     this.DEFAULT_SPEED_X = -30;
     this.MOVE_SPEED_X = 500;
     this.MOVE_SPEED_Y = 800;
+
+    //var cursors = this.game.input.keyboard.createCursorKeys();
 };
 
 Bird.prototype = Object.create(Phaser.Sprite.prototype);
@@ -55,7 +57,7 @@ Bird.prototype.left = function () {
 Bird.prototype.right = function () {
     this.body.velocity.x = +this.MOVE_SPEED_X;
     this.dir = 1;
-    this.scale.x = Math.abs(this.scale.x) * this.dir; //flip to the left
+    this.scale.x = Math.abs(this.scale.x) * this.dir; //flip to the right
     this.angle = 0;
 };
 
