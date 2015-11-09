@@ -77,9 +77,9 @@ Play.prototype = {
         }
 
         if (this.inputManager.shootInputIsActive()) {
-            var xCenter = this.player.x + this.player.width;
-            var yCenter = this.player.y + this.player.height/2;
-            this.bulletGroup.shoot(xCenter, yCenter, this.player.dir);
+            var xPlayerCenter = this.player.x + this.player.width;
+            var yPlayerCenter = this.player.y + this.player.height/2;
+            this.bulletGroup.shoot(xPlayerCenter, yPlayerCenter, this.player.dir);
             this.fx.play("shot");
         }
     },

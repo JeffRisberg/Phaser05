@@ -14,7 +14,7 @@ var MONSTER_MAP = {
     NUMBER_OF_MONSTERS = 10;
 
 /**
- * This is a manager that manages group of monsters by spawning new ones.
+ * This is a manager that manages groups of monsters by spawning new ones from a pool of 10 each.
  * @param game
  * @constructor
  */
@@ -22,7 +22,7 @@ function MonsterManager(game) {
     this.game = game;
     this.groups = {};
 
-    //monster always spawn from the right of the screen;
+    // monsters always spawn from the right of the screen;
     this.resetX = this.game.stage.width;
 
     this.initOneGroup('bat', this.game.stage.height / 2);
