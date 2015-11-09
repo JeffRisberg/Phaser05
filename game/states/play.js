@@ -32,9 +32,9 @@ Play.prototype = {
         this.monsterManager.autoSpawn();
 
         this.scoreText = this.game.add.text(20, 20, "Score: " + this.score,
-            { font: "35px Arial", fill: "#000" });
+            {font: "35px Arial", fill: "#000"});
         this.energyText = this.game.add.text(this.game.world.width - 205, 20, "Energy: " + this.energy,
-            { font: "35px Arial", fill: "#000" });
+            {font: "35px Arial", fill: "#000"});
 
         this.inputManager = new InputManager(this.game);
 
@@ -77,9 +77,9 @@ Play.prototype = {
         }
 
         if (this.inputManager.shootInputIsActive()) {
-            var xPlayerCenter = this.player.x + this.player.width;
-            var yPlayerCenter = this.player.y + this.player.height/2;
-            this.bulletGroup.shoot(xPlayerCenter, yPlayerCenter, this.player.dir);
+            var xOrigin = this.player.x + this.player.width;
+            var yOrigin = this.player.y + this.player.height / 2;
+            this.bulletGroup.shoot(xOrigin, yOrigin, this.player.dir);
             this.fx.play("shot");
         }
     },
