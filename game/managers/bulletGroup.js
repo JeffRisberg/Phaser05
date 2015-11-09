@@ -21,7 +21,7 @@ function BulletGroup(game, parent) { // Extends Phaser.Group
 BulletGroup.prototype = Object.create(Phaser.Group.prototype);
 BulletGroup.prototype.constructor = BulletGroup;
 
-BulletGroup.prototype.shoot = function (x, y, dir) {
+BulletGroup.prototype.shoot = function (x, y, direction) {
     // Enforce a short delay between shots by recording the time that each bullet is shot
     // and testing if the amount of time since the last shot is more than the required delay.
     if (this.lastBulletShotAt === undefined) this.lastBulletShotAt = 0;
@@ -47,8 +47,8 @@ BulletGroup.prototype.shoot = function (x, y, dir) {
     // Set the bullet position to the specified position.
     bullet.reset(x, y);
 
-    // Give the bullet velocity based on which way we are facing
-    bullet.body.velocity.x = dir * this.BULLET_SPEED;
+    // Give the bullet velocity based on which direction we are facing
+    bullet.body.velocity.x = direction * this.BULLET_SPEED;
     bullet.body.velocity.y = 0;
 };
 
