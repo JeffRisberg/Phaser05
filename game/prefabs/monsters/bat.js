@@ -6,7 +6,7 @@ var Bat = function (game, x, y, frame) { // Extends Phaser.Sprite
     this.anchor.setTo(0.5, 0.5);
     this.scale.setTo(2, 2);
     this.alive = true;
-    this.animations.add('default', [4], 10, true);
+    this.animations.add('default');
     this.animations.play('default');
     this.game.physics.arcade.enableBody(this);
 

@@ -6,8 +6,8 @@ var Skeleton = function (game, x, y, frame) { // Extends Phaser.Sprite
     this.anchor.setTo(0.5, 0.5);
     this.scale.setTo(2, 2);
     this.alive = true;
-    this.animations.add('left', [0, 1, 2, 3], 10, true);
-    this.animations.play('left');
+    this.animations.add('default');
+    this.animations.play('default', true);
     this.game.physics.arcade.enableBody(this);
 
     this.body.allowGravity = true;

@@ -60,23 +60,26 @@ Play.prototype = {
 
         if (this.inputManager.leftInputIsActive()) {
             // If the LEFT key is down, set the player velocity to move left
-            this.player.left();
+            this.player.moveLeft();
         } else if (this.inputManager.rightInputIsActive()) {
             // If the RIGHT key is down, set the player velocity to move right
-            this.player.right();
+            this.player.moveRight();
         } else {
             this.player.reset();
         }
+
         if (this.inputManager.upInputIsActive()) {
             // Jump when the player is touching the ground and the up arrow is pressed
-            this.player.up();
+            this.player.moveUp();
         } else if (this.inputManager.downInputIsActive()) {
             // Jump when the player is touching the ground and the up arrow is pressed
-            this.player.down();
+            this.player.moveDown();
         }
 
         if (this.inputManager.shootInputIsActive()) {
-            this.bulletGroup.shoot(this.player.x + this.player.width, this.player.y + this.player.height / 2);
+            var xCenter = this.player.x + this.player.width;
+            var yCenter = this.player.y + this.player.height/2;
+            this.bulletGroup.shoot(xCenter, yCenter, this.player.dir);
             this.fx.play("shot");
         }
     },

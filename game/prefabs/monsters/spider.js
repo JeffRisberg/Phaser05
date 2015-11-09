@@ -6,7 +6,7 @@ var Spider = function (game, x, y, frame) { // Extends Phaser.Sprite
     this.scale.setTo(2, 2);
     this.anchor.setTo(0.5, 0.5);
     this.alive = true;
-    this.animations.add('default', [4], 10, true);
+    this.animations.add('default');
     this.animations.play('default');
     this.game.physics.arcade.enableBody(this);
 
